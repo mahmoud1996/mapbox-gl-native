@@ -35,5 +35,7 @@
   "SymbolGeneratorActivity",
   "TextureViewTransparentBackgroundActivity",
   "SimpleMapActivity",
-  "RenderTestActivity"
+  "RenderTestActivity",
+  "EspressoTestActivity"
+
 ]
