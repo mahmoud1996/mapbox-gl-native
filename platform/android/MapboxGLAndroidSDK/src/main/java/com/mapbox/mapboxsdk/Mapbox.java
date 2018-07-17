@@ -9,9 +9,11 @@ import android.support.annotation.Nullable;
 import android.support.annotation.UiThread;
 import com.mapbox.mapboxsdk.constants.MapboxConstants;
 import com.mapbox.mapboxsdk.exceptions.MapboxConfigurationException;
+import com.mapbox.mapboxsdk.log.Logger;
 import com.mapbox.mapboxsdk.maps.Telemetry;
 import com.mapbox.mapboxsdk.net.ConnectivityReceiver;
-import timber.log.Timber;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * The entry point to initialize the Mapbox Android SDK.
@@ -29,6 +31,7 @@ public final class Mapbox {
   private Context context;
   private String accessToken;
   private Boolean connected;
+  private Telemetry telemetry;
 
   /**
    * Get an instance of Mapbox.
@@ -116,10 +119,20 @@ public final class Mapbox {
    */
   private static void initializeTelemetry() {
     try {
-      Telemetry.initialize();
+      INSTANCE.telemetry = Telemetry.getInstance();
     } catch (Exception exception) {
-      Timber.e(exception);
+      Logger.e(TAG, "Error occured while initializing telemetry", exception);
     }
+  }
+
+  /**
+   * Get an instance of Telemetry if initialised
+   *
+   * @return instance of telemetry
+   */
+  @Nullable
+  public static Telemetry getTelemetry() {
+    return INSTANCE.telemetry;
   }
 
   /**
